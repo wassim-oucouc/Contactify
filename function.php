@@ -72,21 +72,17 @@ class Contactify {
     }
 }
 
+// $contactify = new Contactify();
 
-$contactify = new Contactify();
-$contactify->connect();
+// // Fetch all contacts
+// $contacts = $contactify->fetch();
+// echo "<pre>";
+// print_r($contacts);
+// echo "</pre>";
 
-$contactify->insert("John", "Doe", "john.doe@example.com", "123456789");
+// // Update a contact with ID 1
+// $contactify->update(1, "John", "Doe", "john.doe@example.com", "987654321");
 
-// Fetch all contacts
-$contacts = $contactify->fetch();
-echo "<pre>";
-print_r($contacts);
-echo "</pre>";
-
-// Update a contact with ID 1
-$contactify->update(1, "John", "Doe", "john.doe@example.com", "987654321");
-
-// Delete a contact with ID 1
-$contactify->delete(1);
+// // Delete a contact with ID 1
+// $contactify->delete(1);
 ?>

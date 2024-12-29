@@ -1,3 +1,28 @@
+<?php
+include('function.php');
+if(isset($_POST["send"]))
+{
+
+    $name = $_POST["nom"];
+    $prenom = $_POST["prenom"];
+    $email = $_POST["email"];
+    $numero = $_POST["numero"];
+
+    $contactify = new Contactify();
+    $contactify->connect();
+    
+    $contactify->insert($name, $prenom, $email, $numero);
+
+    header('Location: index.php');
+
+}
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +31,7 @@
     <title>Contactify</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-   
+    <script src = "script.js"></script>
 </head>
 <body>
 
@@ -21,7 +46,7 @@
 <button class ="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  h-">Recherche</button>
 </div>
 
-<div id="crud-modal" tabindex="-1" aria-hidden="true" class="modal-add flex justify-center overflow-y-auto overflow-x fixed  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="crud" tabindex="-1" aria-hidden="true" class="modal-add flex justify-center overflow-y-auto overflow-x fixed  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -38,7 +63,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form class="p-4 md:p-5"  action = "contact.php" method = "POST">
+            <form class="p-4 md:p-5"  action = "index.php" method = "POST">
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
                         <label for="nom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">nom</label>
@@ -74,91 +99,59 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                Name Player
+                Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                photo
+                Last Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                position
+                email
                 </th>
                 <th scope="col" class="px-6 py-3">
-                nationality
-                </th>
-                <th scope="col" class="px-6 py-3">
-                flag
-                </th>
-                <th scope="col" class="px-6 py-3">
-                club
-                </th>
-                <th scope="col" class="px-6 py-3">
-                logo
-                </th>
-                <th scope="col" class="px-6 py-3">
-                rating
-                </th>
-                <th scope="col" class="px-6 py-3">
-                pace/diving
-                </th>
-                <th scope="col" class="px-6 py-3">
-                handling/shooting
-                </th>
-                <th scope="col" class="px-6 py-3">
-                kicking/passing
-                </th>
-                <th scope="col" class="px-6 py-3">
-                reflexes/dribbling
-                </th>
-                <th scope="col" class="px-6 py-3">
-                speed/defending
-                </th>
-                <th scope="col" class="px-6 py-3">
-                positioning/physical
+                Phonenumber
                 </th>
 
 
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-               <img src="" alt="">
-                <td class="px-6 py-4">
-                    Silver
+            <?php
+// include('function.php');
+
+require_once("function.php");
+$contactify = new Contactify();
+
+// Connect to the database
+$contactify->connect();
+
+// Fetch all contacts
+$contacts = $contactify->fetch();
+
+
+var_dump($contacts);
+foreach ($contacts as $contact) {
+    echo ' <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4">
+                ' . $contact["nom"] . '
+            </td>
+            <td class="px-6 py-4">
+                ' . $contact["prenom"] . '
+            </td>
+            <td class="px-6 py-4">
+                ' . $contact["email"] . '
+            </td>
+            <td class="px-6 py-4">
+                ' . htmlspecialchars($contact["numero_telephone"]) . '
+            </td>
+             <td class="flex gap-y-1	 px-6 py-4">
+                   <a  id ="button_delete" name ="delete" class ="confirm_click focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" href ="delete.php?delete_id='.$contact["ID"].'" >Delete</a>
+                    <a  id ="button_delete" name ="delete" class ="confirm_click focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" href ="update.php?update_id='.$contact["ID"].'" >Update</a>
                 </td>
-                <td class="px-6 py-4">
-                    Laptop
-                </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Magic Mouse 2
-                </th>
-                <td class="px-6 py-4">
-                    Black
-                </td>
-                <td class="px-6 py-4">
-                    Accessories
-                </td>
-                <td class="px-6 py-4">
-                    $99
-                </td>
+        </tr>';
+}
+
+?>
+          
             </tr>
         </tbody>
     </table>
@@ -168,7 +161,23 @@
 
 </section>
     <script>
-        
+
+
+const crud_modal = document.querySelector("#crud");
+const add_player =document.querySelector("#add-player");
+const close_modal = document.querySelector("#boutton-close");
+console.log(close_modal);
+crud_modal.style.display = "none";
+
+close_modal.addEventListener("click",function(){
+    crud_modal.style.display = "none";
+})
+
+add_player.addEventListener("click",function(){
+    crud_modal.style.display = "block";
+
+})
+
     </script>
 </body>
 </html>
