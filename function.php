@@ -6,7 +6,6 @@ class Contactify {
     private $dbname = "contactify";
     private $dbh;
 
-    // Connect to the database
     public function connect() {
         try {
             $this->dbh = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
