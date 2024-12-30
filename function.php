@@ -6,7 +6,6 @@ class Contactify {
     private $dbname = "contactify";
     private $dbh;
 
-    // Connect to the database
     public function connect() {
         try {
             $this->dbh = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
@@ -74,6 +73,7 @@ class Contactify {
 
 // $contactify = new Contactify();
 
+<<<<<<< HEAD
 // // Fetch all contacts
 // $contacts = $contactify->fetch();
 // echo "<pre>";
@@ -85,4 +85,7 @@ class Contactify {
 
 // // Delete a contact with ID 1
 // $contactify->delete(1);
+=======
+
+>>>>>>> 2dbdc58a19c00c1bf397ffd28b8f4bd7462eca98
 ?>
